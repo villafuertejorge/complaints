@@ -61,6 +61,12 @@
 			<artifactId>commons-csv</artifactId>
 			<version>1.5</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.soproen</groupId>
+			<artifactId>soproen-complaints-dto</artifactId>
+			<version>1</version>
+		</dependency>
 
 	</dependencies>
 

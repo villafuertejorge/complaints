@@ -1,7 +1,8 @@
-package com.soproen.complaintsmodule.app.model.catalog;
+package com.soproen.complaintsmodule.app.model.complaints;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,13 +19,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "cpt_complaints_types")
-public class CptComplainsType implements Serializable {
+@Table(name = "cpt_household_members_complaints")
+public class CptHouseholdMemberComplaints implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
-
+	
+	@Column(name="hh_member_id")
+	private Long hhMemberId;
+	
+	@Column(name="first_name")
+	private String firstName;
+	
+	@Column(name="last_name")
+	private String lastName;
+	
+	@Column(name="age")
+	private Integer age;
+	
+	@Column(name="is_presented_complaints")
+	private Boolean isPresentedComplaints;
+	
 }

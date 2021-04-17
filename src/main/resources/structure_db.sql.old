@@ -109,7 +109,7 @@ CREATE TABLE complaints.cpt_complaints_statuses (
 	CONSTRAINT cpt_complaints_statuses_fk FOREIGN KEY (complaints_id) REFERENCES complaints.cpt_complaints(id)
 );
 
-CREATE TABLE complaints.cpt_actions_registry (
+CREATE TABLE complaints.cpt_complaints_actions_registry (
 	id serial NOT NULL,
 	complaints_id int4 NOT NULL,
 	complaints_action_id int4 NOT NULL,
@@ -121,9 +121,9 @@ CREATE TABLE complaints.cpt_actions_registry (
 	closed_at timestamp NULL,
 	created_by varchar(50) NULL,
 	observation text NULL,
-	CONSTRAINT cpt_actions_registry_pk PRIMARY KEY (id),
-	CONSTRAINT cpt_actions_registry_fk FOREIGN KEY (complaints_id) REFERENCES complaints.cpt_complaints(id),
-	CONSTRAINT cpt_actions_registry_fk_1 FOREIGN KEY (complaints_action_id) REFERENCES complaints.cpt_complaints_actions(id)
+	CONSTRAINT cpt_complaints_actions_registry_pk PRIMARY KEY (id),
+	CONSTRAINT cpt_complaints_actions_registry_fk FOREIGN KEY (complaints_id) REFERENCES complaints.cpt_complaints(id),
+	CONSTRAINT cpt_complaints_actions_registry_fk_1 FOREIGN KEY (complaints_action_id) REFERENCES complaints.cpt_complaints_actions(id)
 );
 
 CREATE TABLE complaints.cpt_households_complaints (

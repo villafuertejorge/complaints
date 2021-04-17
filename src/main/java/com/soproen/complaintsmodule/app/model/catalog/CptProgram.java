@@ -45,7 +45,7 @@ public class CptProgram implements Serializable {
 	@JoinTable(name = "cpt_program_complaints_types", joinColumns = @JoinColumn(name = "program_id"), 
 	inverseJoinColumns = @JoinColumn(name = "complaints_type_id"), uniqueConstraints = {	
 			@UniqueConstraint(columnNames = { "program_id", "complaints_type_id" }) })
-	private List<CptComplainsType> cptComplaintsTypes;
+	private List<CptComplaintsType> cptComplaintsTypes;
 	
 	
 

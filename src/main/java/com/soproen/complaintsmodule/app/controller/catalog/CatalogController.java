@@ -60,15 +60,15 @@ public class CatalogController extends AbstractParentController {
 		}
 	}
 
-	@GetMapping("/retrieveAllComplaintsypes")
-	public ResponseEntity<?> retrieveAllComplaintsypes() {
+	@GetMapping("/retrieveAllComplaintsTypes")
+	public ResponseEntity<?> retrieveAllComplaintsTypes() {
 		try {
 			List<CptComplaintTypeDTO> complaintsTypeList = utilities.mapObject(
 					catalogService.retrieveAllComplaintsTypes(), new TypeReference<List<CptComplaintTypeDTO>>() {
 					});
 			return new ResponseEntity<Map<String, Object>>(super.responseOK("OK", complaintsTypeList), HttpStatus.OK);
 		} catch (ServiceException e) {
-			log.error("retrieveAllComplaintsypes = {}", e.getMessage());
+			log.error("retrieveAllComplaintsTypes = {}", e.getMessage());
 			return new ResponseEntity<Map<String, Object>>(
 					super.responseError("Failed - retrieve all complaints types"), HttpStatus.OK);
 		}

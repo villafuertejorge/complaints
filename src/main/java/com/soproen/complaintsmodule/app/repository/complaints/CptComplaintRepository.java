@@ -14,6 +14,6 @@ public interface CptComplaintRepository
 		extends JpaRepository<CptComplaint, Long>, JpaSpecificationExecutor<CptComplaint> {
 
 	@Modifying
-	@Query("update CptComplaint cl SET cl.complaintsNumber = :complaintsNumber where cl.id = :id")
+	@Query("update CptComplaint cpt SET cpt.complaintsNumber = :complaintsNumber where cpt.id = :id")
 	int updateComplaintNumber(@Param("complaintsNumber") String complaintsNumber, @Param("id") Long id);
 }

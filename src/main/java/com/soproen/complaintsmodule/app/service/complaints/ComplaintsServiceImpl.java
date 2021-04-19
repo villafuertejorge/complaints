@@ -231,7 +231,12 @@ public class ComplaintsServiceImpl implements ComplaintsService {
 				return composeDataForComplaintExportedFile(tmp);
 			}).collect(Collectors.toList());
 
-			InputStream newInputSream = csvUtils.createCsvFile(dataList, new String[] { "" });
+			InputStream newInputSream = csvUtils.createCsvFile(dataList, new String[] { "District", "TA", "Village",
+					"Zone", "Form Number", "Complaint Number", "Complete name of the member who presents the complaint",
+					"Address", "Telephone/cellphone number", "Type of complaint", "Subcategory",
+					"User who filled out the complaint", "Institution", "Agency/Branch", "Observations",
+					"Name of the officer", "Date of the Complaint", "Status", "Last Action", "Result",
+					"Details of the result", "Date of the last action taken", "User who registered the action" });
 
 			return newInputSream;
 
@@ -267,6 +272,10 @@ public class ComplaintsServiceImpl implements ComplaintsService {
 				? tmp.getCptHouseholdsComplaint().get(0).getTelephone()
 				: "";
 		String complaintType = !utilities.isNull(tmp.getCptComplaintType()) ? tmp.getCptComplaintType().getName() : "";
+		String complaintSubCategory = !utilities.isNull(tmp.getCptComplaintType())
+				&& !utilities.isNull(tmp.getCptComplaintType().getCptComplaintsSubcategory())
+						? tmp.getCptComplaintType().getCptComplaintsSubcategory().getName()
+						: "";
 
 		String district = !utilities.isNull(tmp.getCptHouseholdsComplaint().get(0).getCptDistrict())
 				? tmp.getCptHouseholdsComplaint().get(0).getCptDistrict().getName()
@@ -299,8 +308,8 @@ public class ComplaintsServiceImpl implements ComplaintsService {
 		String userRegisterAction = "";
 		String resultDetails = "";
 
-		Optional<CptComplaintsActionRegistry> optCptComplaintActionRegistry = tmp.getCptComplaintsActionRegistries().stream()
-				.filter(obj -> obj.getClosedAt() == null).findAny();
+		Optional<CptComplaintsActionRegistry> optCptComplaintActionRegistry = tmp.getCptComplaintsActionRegistries()
+				.stream().filter(obj -> obj.getClosedAt() == null).findAny();
 		if (optCptComplaintActionRegistry.isPresent()) {
 			CptComplaintsActionRegistry cptComplaintActionRegistry = optCptComplaintActionRegistry.get();
 			action = !utilities.isNull(cptComplaintActionRegistry.getCptComplaintsAction())
@@ -321,9 +330,9 @@ public class ComplaintsServiceImpl implements ComplaintsService {
 		}
 
 		String[] array = new String[] { district, ta, village, zone, householdCode, complaintNumber,
-				selectedMemberFistName + " " + selectedMemberLastName, address, telephone, complaintType, createdBy,
-				transferInstitution, agency, observation, officerName, complaintDate, complaintStatus, action, result,
-				resultDetails, dateLastAction, userRegisterAction };
+				selectedMemberFistName + " " + selectedMemberLastName, address, telephone, complaintType,
+				complaintSubCategory, createdBy, transferInstitution, agency, observation, officerName, complaintDate,
+				complaintStatus, action, result, resultDetails, dateLastAction, userRegisterAction };
 
 		return array;
 	}
@@ -348,8 +357,8 @@ public class ComplaintsServiceImpl implements ComplaintsService {
 			}
 
 			if (utilities.isObjectIdentifiable(searchComplaintDTO.getProgram())) {
-				searchSpecifications.add(ComplaintsSpecs
-						.getComplaintByProgram(CptProgram.builder().id(searchComplaintDTO.getProgram().getId()).build()));
+				searchSpecifications.add(ComplaintsSpecs.getComplaintByProgram(
+						CptProgram.builder().id(searchComplaintDTO.getProgram().getId()).build()));
 			}
 
 			if (utilities.isObjectIdentifiable(searchComplaintDTO.getDistrict())) {
@@ -358,13 +367,13 @@ public class ComplaintsServiceImpl implements ComplaintsService {
 			}
 
 			if (utilities.isObjectIdentifiable(searchComplaintDTO.getTa())) {
-				searchSpecifications.add(
-						ComplaintsSpecs.getComplaintByTA(CptTa.builder().id(searchComplaintDTO.getTa().getId()).build()));
+				searchSpecifications.add(ComplaintsSpecs
+						.getComplaintByTA(CptTa.builder().id(searchComplaintDTO.getTa().getId()).build()));
 			}
 
 			if (utilities.isObjectIdentifiable(searchComplaintDTO.getVillage())) {
-				searchSpecifications.add(ComplaintsSpecs
-						.getComplaintByVillage(CptVillage.builder().id(searchComplaintDTO.getVillage().getId()).build()));
+				searchSpecifications.add(ComplaintsSpecs.getComplaintByVillage(
+						CptVillage.builder().id(searchComplaintDTO.getVillage().getId()).build()));
 			}
 
 			if (utilities.isObjectIdentifiable(searchComplaintDTO.getZone())) {
@@ -380,8 +389,8 @@ public class ComplaintsServiceImpl implements ComplaintsService {
 			}
 
 			if (utilities.isObjectIdentifiable(searchComplaintDTO.getTransferInstitution())) {
-				searchSpecifications.add(ComplaintsSpecs.getComplaintByTransferInstitution(
-						CptTransferInstitution.builder().id(searchComplaintDTO.getTransferInstitution().getId()).build()));
+				searchSpecifications.add(ComplaintsSpecs.getComplaintByTransferInstitution(CptTransferInstitution
+						.builder().id(searchComplaintDTO.getTransferInstitution().getId()).build()));
 			}
 
 			if (!utilities.isNull(searchComplaintDTO.getStatus())) {
@@ -390,8 +399,8 @@ public class ComplaintsServiceImpl implements ComplaintsService {
 			}
 
 			if (!utilities.isNullOrEmpty(searchComplaintDTO.getUserNameCreatedBy())) {
-				searchSpecifications
-						.add(ComplaintsSpecs.getComplaintByCreatedByUsername(searchComplaintDTO.getUserNameCreatedBy()));
+				searchSpecifications.add(
+						ComplaintsSpecs.getComplaintByCreatedByUsername(searchComplaintDTO.getUserNameCreatedBy()));
 			}
 
 			List<CptComplaint> complaintList = new ArrayList<>();
@@ -431,8 +440,8 @@ public class ComplaintsServiceImpl implements ComplaintsService {
 
 	@Override
 	@Transactional
-	public CptComplaint registerNewComplaintAction(
-			RegisterNewComplaintActionDTO registerNewComplaintActionDTO) throws ServiceException {
+	public CptComplaint registerNewComplaintAction(RegisterNewComplaintActionDTO registerNewComplaintActionDTO)
+			throws ServiceException {
 		try {
 
 			Date currentDate = Calendar.getInstance().getTime();
@@ -457,8 +466,8 @@ public class ComplaintsServiceImpl implements ComplaintsService {
 							.actionResult(complaintActionResult)
 							.details(registerNewComplaintActionDTO.getComplaintResultDetails())
 							.actionDate(registerNewComplaintActionDTO.getComplaintActionDate())
-							.usernameCreatedBy(registerNewComplaintActionDTO.getCreatedByUsername()).createdAt(currentDate)
-							.build());
+							.usernameCreatedBy(registerNewComplaintActionDTO.getCreatedByUsername())
+							.createdAt(currentDate).build());
 
 			newComplaint.getCptComplaintsStatuses().stream().forEach(cptComplaintsStatusesTmp -> {
 				if (cptComplaintsStatusesTmp.getClosedAt() == null) {
@@ -466,16 +475,14 @@ public class ComplaintsServiceImpl implements ComplaintsService {
 				}
 			});
 
-			CptComplaintsStatusEnum newStatus = complaintActionResult.equals(CptComplaintsActionResultEnum.REFERRALS)?CptComplaintsStatusEnum.REFERRALS
-					:complaintActionResult.equals(CptComplaintsActionResultEnum.CLOSE)?CptComplaintsStatusEnum.CLOSED:CptComplaintsStatusEnum.OPEN;
-			
+			CptComplaintsStatusEnum newStatus = complaintActionResult.equals(CptComplaintsActionResultEnum.REFERRALS)
+					? CptComplaintsStatusEnum.REFERRALS
+					: complaintActionResult.equals(CptComplaintsActionResultEnum.CLOSE) ? CptComplaintsStatusEnum.CLOSED
+							: CptComplaintsStatusEnum.OPEN;
+
 			newComplaint.getCptComplaintsStatuses()
-			.add(CptComplaintsStatus.builder().createdAt(currentDate)
-					.status(newStatus)
-					.createdAt(currentDate)
-					.usernameCreatedBy(registerNewComplaintActionDTO.getCreatedByUsername()).build());
-			
-			
+					.add(CptComplaintsStatus.builder().createdAt(currentDate).status(newStatus).createdAt(currentDate)
+							.usernameCreatedBy(registerNewComplaintActionDTO.getCreatedByUsername()).build());
 
 			log.info("newCptComplaint= {} ", newComplaint);
 			newComplaint = complaintRepository.save(newComplaint);

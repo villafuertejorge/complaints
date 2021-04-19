@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 import com.soproen.complaintsmodule.app.model.complaints.CptComplaint;
 
 @Repository
-public interface CtpComplaintRepository
+public interface CptComplaintRepository
 		extends JpaRepository<CptComplaint, Long>, JpaSpecificationExecutor<CptComplaint> {
 
 	@Modifying
-	@Query("update CtpComplaint cl SET cl.complaintsNumber = :complaintsNumber where cl.id = :id")
+	@Query("update CptComplaint cl SET cl.complaintsNumber = :complaintsNumber where cl.id = :id")
 	int updateComplaintNumber(@Param("complaintsNumber") String complaintsNumber, @Param("id") Long id);
 }

@@ -40,6 +40,6 @@ public class CptHouseholdMemberComplaints implements Serializable {
 	private Integer age;
 	
 	@Column(name="is_presented_complaints")
-	private Boolean isPresentedComplaints;
+	private Boolean isPresentedComplaint;
 	
 }

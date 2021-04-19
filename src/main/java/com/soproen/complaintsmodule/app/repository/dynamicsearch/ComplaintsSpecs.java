@@ -102,7 +102,7 @@ public class ComplaintsSpecs {
 		};
 	}
 
-	public static Specification<CptComplaint> getComplanintByZone(CptZone cptZone) {
+	public static Specification<CptComplaint> getComplaintsByZone(CptZone cptZone) {
 		return (root, query, criteriaBuilder) -> {
 			ListJoin<CptComplaint, CptHouseholdComplaint> householdComplaintJoin = root
 					.join(CptComplaint_.cptHouseholdsComplaint);

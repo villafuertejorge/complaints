@@ -86,7 +86,7 @@ public class CptComplaint implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "complaints_type_id")
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-	private CptComplaintsType cptComplaintsType;
+	private CptComplaintsType cptComplaintType;
 
 	@Column(name = "observation")
 	private String observation;
@@ -108,7 +108,7 @@ public class CptComplaint implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler", "cptComplaint" }, allowSetters = true)
 	@JoinColumn(name = "complaints_id", nullable = false)
-	private List<CptComplaintsStatus> ctpComplaintsStatuses;
+	private List<CptComplaintsStatus> cptComplaintsStatuses;
 	
 	@Singular
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

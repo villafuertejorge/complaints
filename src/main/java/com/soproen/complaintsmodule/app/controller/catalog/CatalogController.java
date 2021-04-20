@@ -230,8 +230,8 @@ public class CatalogController extends AbstractParentController {
 		}
 	}
 
-	@GetMapping("/retrieveCptComplaintsTypeById/{idComplaintType}")
-	public ResponseEntity<?> retrieveCptComplaintsTypeById(
+	@GetMapping("/retrieveCptComplaintTypeById/{idComplaintType}")
+	public ResponseEntity<?> retrieveCptComplaintTypeById(
 			@PathVariable(name = "idComplaintType", required = true) Long idComplaintType) {
 		try {
 			CptComplaintsTypeDTO complaintType = utilities

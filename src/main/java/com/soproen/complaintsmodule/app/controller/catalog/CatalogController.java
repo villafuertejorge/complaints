@@ -27,7 +27,6 @@ import com.soproen.complaintsdto.dto.catalog.CptTaDTO;
 import com.soproen.complaintsdto.dto.catalog.CptTransferInstitutionDTO;
 import com.soproen.complaintsdto.dto.catalog.CptVillageDTO;
 import com.soproen.complaintsdto.dto.catalog.CptZoneDTO;
-import com.soproen.complaintsdto.dto.complaint.CptComplaintTypeDTO;
 import com.soproen.complaintsdto.dto.complaint.CptComplaintsActionDTO;
 import com.soproen.complaintsmodule.app.controller.AbstractParentController;
 import com.soproen.complaintsmodule.app.exceptions.ServiceException;
@@ -63,8 +62,8 @@ public class CatalogController extends AbstractParentController {
 	@GetMapping("/retrieveAllComplaintsTypes")
 	public ResponseEntity<?> retrieveAllComplaintsTypes() {
 		try {
-			List<CptComplaintTypeDTO> complaintsTypeList = utilities.mapObject(
-					catalogService.retrieveAllComplaintsTypes(), new TypeReference<List<CptComplaintTypeDTO>>() {
+			List<CptComplaintsTypeDTO> complaintsTypeList = utilities.mapObject(
+					catalogService.retrieveAllComplaintsTypes(), new TypeReference<List<CptComplaintsTypeDTO>>() {
 					});
 			return new ResponseEntity<Map<String, Object>>(super.responseOK("OK", complaintsTypeList), HttpStatus.OK);
 		} catch (ServiceException e) {

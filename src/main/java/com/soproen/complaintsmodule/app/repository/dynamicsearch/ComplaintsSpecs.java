@@ -136,7 +136,7 @@ public class ComplaintsSpecs {
 
 			if (!predicateList.isEmpty()) {
 				Predicate equalPredicate = criteriaBuilder
-						.isTrue(householdComplaintJoin.get(CptHouseholdMemberComplaints_.isPresentedComplaints));
+						.isTrue(householdComplaintJoin.get(CptHouseholdMemberComplaints_.isPresentedComplaint));
 				predicateList.add(equalPredicate);
 			}
 			return criteriaBuilder.and(predicateList.toArray(new Predicate[0]));

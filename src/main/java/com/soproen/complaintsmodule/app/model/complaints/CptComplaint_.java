@@ -14,4 +14,5 @@ public class CptComplaint_ {
 	public static volatile SingularAttribute<CptComplaint, CptTransferInstitution> cptTransferInstitution;
 	public static volatile ListAttribute<CptComplaint, CptComplaintsStatus> cptComplaintsStatuses;
 	public static volatile SingularAttribute<CptComplaint, String> createdBy;
+	public static volatile SingularAttribute<CptComplaint, String> agencyName;
 }

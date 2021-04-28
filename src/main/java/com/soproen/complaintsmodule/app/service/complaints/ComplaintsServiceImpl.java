@@ -402,6 +402,11 @@ public class ComplaintsServiceImpl implements ComplaintsService {
 				searchSpecifications.add(
 						ComplaintsSpecs.getComplaintByCreatedByUsername(searchComplaintDTO.getUserNameCreatedBy()));
 			}
+			
+			if (!utilities.isNullOrEmpty(searchComplaintDTO.getAgencyName())) {
+				searchSpecifications.add(
+						ComplaintsSpecs.getComplaintByAgencyName(searchComplaintDTO.getAgencyName()));
+			}
 
 			List<CptComplaint> complaintList = new ArrayList<>();
 			Pageable sortedByPriceDesc = PageRequest.of(0, 100, Sort.by("id").descending());

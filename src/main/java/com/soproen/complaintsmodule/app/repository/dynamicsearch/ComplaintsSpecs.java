@@ -41,6 +41,14 @@ public class ComplaintsSpecs {
 			return equalPredicate;
 		};
 	}
+	
+	public static Specification<CptComplaint> getComplaintByAgencyName(String agencyName) {
+		return (root, query, criteriaBuilder) -> {
+			Predicate equalPredicate = criteriaBuilder.like(criteriaBuilder.lower(root.get(CptComplaint_.agencyName)),
+					"%" + agencyName.toLowerCase() + "%");
+			return equalPredicate;
+		};
+	}
 
 	public static Specification<CptComplaint> getComplaintByHouseholdCode(String householdCode) {
 		return (root, query, criteriaBuilder) -> {
